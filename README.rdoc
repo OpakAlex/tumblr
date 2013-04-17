@@ -7,7 +7,7 @@ Tumblr is a rails gem that allows you to use the Tumblr API. The idea is that yo
 To install the gem, put this in your Gemfile;
 
   gem "tumblr", git: "git://github.com/OpakAlex/tumblr.git"
-  
+
 == Authentication
 
 To create, update or delete a post (or fetch private posts), you should be authenticated. The only thing you have to do is call initialize the User class by doing this:

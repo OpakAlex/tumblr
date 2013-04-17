@@ -24,16 +24,18 @@ class Tumblr
       
     end
 
-    # find the first post
+    # find the first posts
     def self.find_initial(options)
+      total = self.count
       if options.empty?
-        total = self.count
         options = {:start => (total - 1),  :num => 1}
+      else
+        options = options.merge({:start => (total - options[:limit]),  :num => 1})
       end
       response = Tumblr::Request.read(options)
 
-      return response['tumblr']['posts']['post'].first if options[:num] == 1
-      response['tumblr']['posts']['post']
+      return response['tumblr']['posts']['post'].first unless options[:limit]
+      response['tumblr']['posts']['post'].first(options[:limit])
     end
   
     # find the last post
