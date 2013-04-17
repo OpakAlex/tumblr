@@ -15,24 +15,24 @@ class Tumblr
     
     # count the posts
     def self.count(options = {})
-      
-      #puts balh = {:num => 1}.merge(options).to_yaml      
       response = Tumblr::Request.read({:num => 1}.merge(options))
-      if(options.empty?)
+      #if options.empty?
         #puts response['tumblr']['posts'].to_yaml
         #puts "*****"
-      end
+      #end
       response['tumblr']['posts']['total'].to_i
       
     end
 
     # find the first post
     def self.find_initial(options)
-      total = self.count
-      options = {:start => (total - 1),  :num => 1} if(options.empty?)      
+      if options.empty?
+        total = self.count
+        options = {:start => (total - 1),  :num => 1}
+      end
       response = Tumblr::Request.read(options)
 
-      return response['tumblr']['posts']['post'].first unless(options == {:start => (total - 1),  :num => 1})
+      return response['tumblr']['posts']['post'].first if options[:num] == 1
       response['tumblr']['posts']['post']
     end
   
